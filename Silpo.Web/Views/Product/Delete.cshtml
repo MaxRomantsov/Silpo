@@ -1,0 +1,52 @@
+﻿@using Silpo.Core.DTO_s.Product;
+@model ProductDto
+
+@{
+    ViewData["Title"] = "Delete product";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Delete good</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Delete product</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Warning!
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="callout callout-danger">
+                                @if (@ViewBag.AuthError != null)
+                                {
+                                    <span class="text-danger">@ViewBag.AuthError</span>
+                                }
+                                <h5 class="mb-4">Do you really wants to delete product @Model.Title</h5>
+                                <a asp-action="DeleteById" asp-controller="Product" asp-route-id="@Model.Id" style="width: 25%;" class="btn btn-block btn-danger btn-sm">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,7 +1,23 @@
+using Silpo.Infrastructure;
+using Silpo.Infrastructure.Initializers;
+using Silpo.Core;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+string connStr = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext(connStr);
+
+builder.Services.AddCoreServices();
+
+builder.Services.AddInfrastructureService();
+
+builder.Services.AddRepositories();
+
+builder.Services.AddMapping();
+
 
 var app = builder.Build();
 
@@ -23,5 +39,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await UsersAndRolesInitializer.SeedUsersAndRoles(app);
 
 app.Run();

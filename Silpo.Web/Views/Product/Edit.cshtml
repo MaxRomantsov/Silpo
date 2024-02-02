@@ -1,0 +1,106 @@
+﻿@using Silpo.Core.DTO_s.Product;
+@model ProductDto
+
+@{
+    ViewData["Title"] = "Edit product";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    <link rel="stylesheet" href="~/dashboard/plugins/summernote/summernote-bs4.min.css">
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edit product</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item active">Edit product</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-7 offset-2">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Update product</h3>
+                        </div>
+                        @if (@ViewBag.CreatePostError != null)
+                        {
+                            <span class="text-danger mt-3">@ViewBag.CreatePostError</span>
+                        }
+                        <form method="post" asp-controller="Product" asp-action="Edit" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="@Model.ExpiryDate">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" asp-for="@Model.Title" class="form-control" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="text" asp-for="@Model.Price" class="form-control" placeholder="Description">
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Category">Category</label>
+                                    <select asp-for="CategoryId" class="custom-select form-control-border" asp-items="ViewBag.CategoryList"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" id="Image" name="files" class="custom-file-input">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @if (@Model.ImagePath == "Default.png")
+                                    {
+                                        <img src="~/images/main/content-images/1.jpg" alt="Photo">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/products/@Model.ImagePath" alt="Photo">
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts{
+    <script src="~/dashboard/plugins/summernote/summernote-bs4.min.js"></script>
+    <script>
+        $(function () {
+            $('#summernote').summernote({
+                minHeight: 200
+            })
+        })
+        $(function () {
+            $('#text').summernote({
+                minHeight: 400
+            })
+        })
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}
